@@ -54,8 +54,3 @@ for (let i = 0; i <=  TOP_COUNT; i++){
 //Создание DOM элемента статистики пользователя
 render(siteMain, createStatsTemplate());
 
-
-console.log(filmsContainerTopList);
-//render(siteMain, topFilmList, 'beforeend');
-//Создание DOM элемента popup
-//render(siteMain, createPopupTemlate, 'beforeend');
