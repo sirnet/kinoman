@@ -30,4 +30,16 @@ const dates = [
 ];
 const message = ['Great movie!', 'Cool', 'Top', 'Nice film'];
 
+const comment = {
+  autors : ['Misha', 'Viktor', 'Gena', 'Sveta', 'Anastasiya'],
+  emotions : ['smile', 'sleeping', 'puke', 'angry'],
+  dates : [
+    '2019/12/31 23:59',
+    '2020/01/23 13:59',
+    '2020/02/8 11:20',
+    '2020/02/16 63:50',
+    '2020/03/13 09:54'
+  ]
+};
 
+export { comment };

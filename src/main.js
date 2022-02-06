@@ -5,6 +5,8 @@ import { createShowMoreTemplate } from './view/show-more.js';
 import { createPopupTemlate } from './view/popup.js';
 import { createSectionTopFilms } from './view/top-rated.js';
 import { createMostCommentTemplated } from './view/most-commented.js';
+import { comment } from './mock/cadr.js';
+
 
 const FILM_COUNT = 4;
 const TOP_COUNT = 1;
@@ -54,3 +56,4 @@ for (let i = 0; i <=  TOP_COUNT; i++){
 //Создание DOM элемента статистики пользователя
 render(siteMain, createStatsTemplate());
 
+console.log(comment);
