@@ -1,3 +1,5 @@
+const COUNTER = 24;
+
 const filmName = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
 'Santa Claus Conquers the Martians', 'Popeye the Sailor Meets Sindbad the Sailor'];
 
@@ -19,17 +21,6 @@ const description = [
   'Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.'
 ];
 
-const autors = ['Misha', 'Viktor', 'Gena', 'Sveta', 'Anastasiya'];
-const emotions = ['smile', 'sleeping', 'puke', 'angry'];
-const dates = [
-  '2019/12/31 23:59',
-  '2020/01/23 13:59',
-  '2020/02/8 11:20',
-  '2020/02/16 63:50',
-  '2020/03/13 09:54'
-];
-const message = ['Great movie!', 'Cool', 'Top', 'Nice film'];
-
 const comment = {
   autors : ['Misha', 'Viktor', 'Gena', 'Sveta', 'Anastasiya'],
   emotions : ['smile', 'sleeping', 'puke', 'angry'],
@@ -39,7 +30,36 @@ const comment = {
     '2020/02/8 11:20',
     '2020/02/16 63:50',
     '2020/03/13 09:54'
-  ]
+  ],
+  message : ['Great movie!', 'Cool', 'Top', 'Nice film']
 };
 
-export { comment };
+const getRandom = (a = 0, b = 1) => {
+
+  const initial = Math.ceil(Math.min(a,b));
+  const final = Math.floor(Math.max(a,b));
+
+  return Math.floor(initial + Math.random() * (final - initial + 1));
+};
+
+const cardMove = () => {
+  let arrayMove = [];
+  for (let i = 0; i <= COUNTER; i ++){
+    arrayMove[i] = {
+      filmName : filmName[getRandom(0, filmName.length - 1)],
+      posterName : posterName[getRandom(0, posterName.length - 1)],
+      description : description[getRandom(0, description.length - 1)],
+      comment : {
+        autors : comment.autors[getRandom(0, comment.autors.length - 1)],
+        emotions : comment.emotions[getRandom(0, comment.emotions.length - 1)],
+        dates : comment.dates[getRandom(0, comment.dates.length - 1)],
+        message : comment.message[getRandom(0, comment.message.length - 1)]
+      }
+    };
+  }
+
+  return arrayMove;
+};
+
+const arrayMove = cardMove();
+export { arrayMove };
