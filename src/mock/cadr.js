@@ -1,9 +1,9 @@
 const COUNTER = 24;
 
-const filmName = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
+const title = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
 'Santa Claus Conquers the Martians', 'Popeye the Sailor Meets Sindbad the Sailor'];
 
-const posterName = [
+const poster = [
   'made-for-each-other.png',
   'popeye-meets-sinbad.png',
   'sagebrush-trail.jpg',
@@ -46,8 +46,9 @@ const cardMove = () => {
   let arrayMove = [];
   for (let i = 0; i <= COUNTER; i ++){
     arrayMove[i] = {
-      filmName : filmName[getRandom(0, filmName.length - 1)],
-      posterName : posterName[getRandom(0, posterName.length - 1)],
+      id : i,
+      title : title[getRandom(0, title.length - 1)],
+      poster : poster[getRandom(0, poster.length - 1)],
       description : description[getRandom(0, description.length - 1)],
       comment : {
         autors : comment.autors[getRandom(0, comment.autors.length - 1)],

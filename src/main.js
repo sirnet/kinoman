@@ -7,7 +7,9 @@ import { createSectionTopFilms } from './view/top-rated.js';
 import { createMostCommentTemplated } from './view/most-commented.js';
 import {arrayMove} from './mock/cadr.js';
 
-const FILM_COUNT = 4;
+
+
+let FILM_COUNT = 4;
 const TOP_COUNT = 1;
 let filmsContainerTopList;
 const POSITION = 'beforeend';
@@ -43,15 +45,31 @@ render(filmsSection, createShowMoreTemplate());
 render(filmsSection, createSectionTopFilms());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[1], creatCardFilm());
+  render(filmsContainerTopList[1], creatCardFilm(arrayMove[i]));
 }
 
 render(filmsSection, createMostCommentTemplated());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[2], creatCardFilm());
+  render(filmsContainerTopList[2], creatCardFilm(arrayMove[i]));
 }
 
 //Создание DOM элемента статистики пользователя
 render(siteMain, createStatsTemplate());
+
+//render(siteMain, createPopupTemlate(arrayMove[0]));
+const showMore = document.querySelector('.films-list__show-more');
+
+showMore.addEventListener('click', function(){
+  let i = FILM_COUNT;
+
+  for (FILM_COUNT; FILM_COUNT <= i + 4; FILM_COUNT++){
+    console.log(FILM_COUNT);
+    if(arrayMove.length <= FILM_COUNT){
+      showMore.classList.add('visually-hidden');
+      break;
+    }
+    render(filmsList, creatCardFilm(arrayMove[FILM_COUNT]));
+  }
+});
 
