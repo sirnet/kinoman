@@ -71,6 +71,13 @@ showMore.addEventListener('click', function(){
 let filmCardLink = document.querySelectorAll('.film-card');
 console.log(filmCardLink);
 
+console.log(filmCardLink[0].childNodes)
+
+filmCardLink.forEach((value) => {
+  value.childNodes[1].addEventListener('click', () => {
+    render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
+  });
+});
 
 //render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
 

@@ -1,6 +1,6 @@
-const creatCardFilm = (array) => {
+const creatCardFilm = (cardData) => {
 
-  const { title , description, poster } = array;
+  const { title , description, poster } = cardData;
 
   return `<article class="film-card">
   <a class="film-card__link">
