@@ -1,3 +1,5 @@
+import { getRandom } from '../utils.js';
+
 const COUNTER = 24;
 
 const title = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
@@ -32,14 +34,6 @@ const comment = {
     '2020/03/13 09:54'
   ],
   message : ['Great movie!', 'Cool', 'Top', 'Nice film']
-};
-
-const getRandom = (a = 0, b = 1) => {
-
-  const initial = Math.ceil(Math.min(a,b));
-  const final = Math.floor(Math.max(a,b));
-
-  return Math.floor(initial + Math.random() * (final - initial + 1));
 };
 
 const cardMove = () => {

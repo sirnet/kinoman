@@ -1,7 +1,6 @@
 export const createPopupTemlate = (array) => {
   console.log(array);
-  const {title, description, poster, comment} = array;
-  console.log(poster);
+    const {title, description, poster, comment} = array;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">

@@ -5,22 +5,16 @@ import { createShowMoreTemplate } from './view/show-more.js';
 import { createPopupTemlate } from './view/popup.js';
 import { createSectionTopFilms } from './view/top-rated.js';
 import { createMostCommentTemplated } from './view/most-commented.js';
-import {arrayMove} from './mock/cadr.js';
-
+import { arrayMove } from './mock/cadr.js';
+import { render, getRandom } from './utils.js';
 
 
 let FILM_COUNT = 4;
 const TOP_COUNT = 1;
 let filmsContainerTopList;
-const POSITION = 'beforeend';
 
 const searchElement = () => {
   return document.querySelectorAll('.films-list__container');
-};
-
-//Функция создания DOM элементов
-const render = (container, template) => {
-  container.insertAdjacentHTML(POSITION, template);
 };
 
 //Точка входа DOM элемента main
@@ -64,12 +58,19 @@ showMore.addEventListener('click', function(){
   let i = FILM_COUNT;
 
   for (FILM_COUNT; FILM_COUNT <= i + 4; FILM_COUNT++){
-    console.log(FILM_COUNT);
     if(arrayMove.length <= FILM_COUNT){
       showMore.classList.add('visually-hidden');
       break;
     }
     render(filmsList, creatCardFilm(arrayMove[FILM_COUNT]));
   }
+  let filmCardLink = document.querySelectorAll('.film-card');
+  console.log(filmCardLink);
 });
+
+let filmCardLink = document.querySelectorAll('.film-card');
+console.log(filmCardLink);
+
+
+//render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
 
