@@ -12,13 +12,14 @@ import { render, getRandom } from './utils.js';
 let FILM_COUNT = 4;
 const TOP_COUNT = 1;
 let filmsContainerTopList;
+let filmCardLink;
 
 const searchElement = () => {
   return document.querySelectorAll('.films-list__container');
 };
 
 //Точка входа DOM элемента main
-const siteMain = document.querySelector('.main');
+let siteMain = document.querySelector('.main');
 render(siteMain, createSiteMenuTemplate());
 
 
@@ -64,20 +65,27 @@ showMore.addEventListener('click', function(){
     }
     render(filmsList, creatCardFilm(arrayMove[FILM_COUNT]));
   }
-  let filmCardLink = document.querySelectorAll('.film-card');
-  console.log(filmCardLink);
+  filmCardLink = document.querySelectorAll('.film-card');
 });
 
-let filmCardLink = document.querySelectorAll('.film-card');
-console.log(filmCardLink);
+filmCardLink = document.querySelectorAll('.film-card');
 
-console.log(filmCardLink[0].childNodes)
-
-filmCardLink.forEach((value) => {
+filmCardLink.forEach((value, index) => {
   value.childNodes[1].addEventListener('click', () => {
-    render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
+    render(siteMain, createPopupTemlate(arrayMove[index]));
   });
+  filmCardLink = document.querySelectorAll('.film-card');
+  siteMain = document.querySelector('.main');
 });
+
+siteMain.addEventListener('click', () => {
+  if(siteMain.querySelector('.film-details')){
+    document.querySelector('.film-details__close').querySelector('click', () => {
+      siteMain.querySelector('.film-details').remove();
+    });
+  }
+});
+
 
 //render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
 
