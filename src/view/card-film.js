@@ -1,5 +1,5 @@
 const creatCardFilm = (cardData) => {
-
+  
   const { title , description, poster } = cardData;
 
   return `<article class="film-card">
@@ -33,4 +33,14 @@ const creatSectionFilms = () => {
   </section>`;
 };
 
-export { creatSectionFilms, creatCardFilm };
+class CardFilms {
+  constructor (cardList) {
+    this._cardList = cardList;
+  }
+
+  getTemplate() {
+    return creatCardFilm(this._cardList);
+  }
+}
+
+export { creatSectionFilms, CardFilms };

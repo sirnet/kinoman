@@ -1,8 +1,8 @@
 import { createSiteMenuTemplate } from './view/site-menu.js';
-import { creatSectionFilms, creatCardFilm } from './view/card-film.js';
+import { creatSectionFilms, CardFilms } from './view/card-film.js';
 import { createStatsTemplate } from './view/stats.js';
 import { createShowMoreTemplate } from './view/show-more.js';
-import { createPopupTemlate } from './view/popup.js';
+import { PopupFilm } from './view/popup.js';
 import { createSectionTopFilms } from './view/top-rated.js';
 import { createMostCommentTemplated } from './view/most-commented.js';
 import { arrayMove } from './mock/cadr.js';
@@ -30,7 +30,7 @@ const filmsSection = document.querySelector('.films');
 //Создание DOM элемента карточек
 const filmsList = document.querySelector('.films-list__container');
 for (let i = 0; i <= FILM_COUNT; i++){
-  render(filmsList, creatCardFilm(arrayMove[i]));
+  render(filmsList, new CardFilms(arrayMove[i]).getTemplate());
 }
 
 //Создание DOM элемента кнопка загрузки дополнительных фильмов
@@ -40,13 +40,13 @@ render(filmsSection, createShowMoreTemplate());
 render(filmsSection, createSectionTopFilms());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[1], creatCardFilm(arrayMove[i]));
+  render(filmsContainerTopList[1], new CardFilms(arrayMove[i]).getTemplate());
 }
 
 render(filmsSection, createMostCommentTemplated());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[2], creatCardFilm(arrayMove[i]));
+  render(filmsContainerTopList[2], new CardFilms(arrayMove[i]).getTemplate());
 }
 
 //Создание DOM элемента статистики пользователя
@@ -63,7 +63,7 @@ showMore.addEventListener('click', function(){
       showMore.classList.add('visually-hidden');
       break;
     }
-    render(filmsList, creatCardFilm(arrayMove[FILM_COUNT]));
+    render(filmsList, new CardFilms(arrayMove[FILM_COUNT]).getTemplate());
   }
   filmCardLink = document.querySelectorAll('.film-card');
 });
@@ -72,7 +72,7 @@ filmCardLink = document.querySelectorAll('.film-card');
 
 filmCardLink.forEach((value, index) => {
   value.childNodes[1].addEventListener('click', () => {
-    render(siteMain, createPopupTemlate(arrayMove[index]));
+    render(siteMain, new PopupFilm(arrayMove[index]).getPopup());
   });
   filmCardLink = document.querySelectorAll('.film-card');
   siteMain = document.querySelector('.main');

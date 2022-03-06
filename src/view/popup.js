@@ -1,6 +1,7 @@
-export const createPopupTemlate = (array) => {
-  console.log(array);
-    const {title, description, poster, comment} = array;
+const createPopupTemlate = (array) => {
+
+  const {title, description, poster, comment} = array;
+
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -163,3 +164,13 @@ export const createPopupTemlate = (array) => {
         </div>
       </section>`;
 };
+
+export class PopupFilm {
+  constructor(popup){
+    this._popup = popup;
+  }
+
+  getPopup() {
+    return createPopupTemlate(this._popup);
+  }
+}
