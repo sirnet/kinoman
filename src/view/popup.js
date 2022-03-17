@@ -1,3 +1,5 @@
+import { createElement } from "../utils";
+
 const createPopupTemlate = (array) => {
 
   const {title, description, poster, comment} = array;
@@ -165,12 +167,25 @@ const createPopupTemlate = (array) => {
       </section>`;
 };
 
-export class PopupFilm {
+export default class PopupFilm {
   constructor(popup){
     this._popup = popup;
+    this._element = null;
   }
 
   getPopup() {
     return createPopupTemlate(this._popup);
+  }
+
+  getElement() {
+    if(!this._element){
+      return createElement(this.getPopup());
+    }
+
+    return this._element;
+  }
+
+  removeElement(){
+    this._element = null;
   }
 }

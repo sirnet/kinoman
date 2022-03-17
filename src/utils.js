@@ -1,13 +1,17 @@
 
 const POSITION = 'beforeend';
 
-//Функция создания DOM элементов
-const render = (container, template) => {
-  container.insertAdjacentHTML(POSITION, template);
+export const render = (container, template) => {
+  container.append(template);
 };
 
+export const createElement = (template) => {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
 
-const getRandom = (a = 0, b = 1) => {
+export const getRandom = (a = 0, b = 1) => {
 
   const initial = Math.ceil(Math.min(a,b));
   const final = Math.floor(Math.max(a,b));
@@ -15,4 +19,3 @@ const getRandom = (a = 0, b = 1) => {
   return Math.floor(initial + Math.random() * (final - initial + 1));
 };
 
-export { render, getRandom };

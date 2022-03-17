@@ -1,13 +1,12 @@
-import { createSiteMenuTemplate } from './view/site-menu.js';
-import { creatSectionFilms, CardFilms } from './view/card-film.js';
-import { createStatsTemplate } from './view/stats.js';
-import { createShowMoreTemplate } from './view/show-more.js';
-import { PopupFilm } from './view/popup.js';
-import { createSectionTopFilms } from './view/top-rated.js';
-import { createMostCommentTemplated } from './view/most-commented.js';
-import { arrayMove } from './mock/cadr.js';
+import  SiteMenu from './view/site-menu.js';
+import { SectionFilms, CardFilms } from './view/card-film.js';
+import StatsTemplate from './view/stats.js';
+import MoreTamplate from './view/show-more.js';
+import PopupFilm from './view/popup.js';
+import TopFilms from './view/top-rated.js';
+import CommentTemplated  from './view/most-commented.js';
+import { arrayMove }  from './mock/cadr.js';
 import { render, getRandom } from './utils.js';
-
 
 let FILM_COUNT = 4;
 const TOP_COUNT = 1;
@@ -20,72 +19,66 @@ const searchElement = () => {
 
 //Точка входа DOM элемента main
 let siteMain = document.querySelector('.main');
-render(siteMain, createSiteMenuTemplate());
-
+render(siteMain, new SiteMenu().getElement());
 
 //Создание DOM элемента section films
-render(siteMain, creatSectionFilms());
+render(siteMain, new SectionFilms().getElement());
 const filmsSection = document.querySelector('.films');
 
 //Создание DOM элемента карточек
 const filmsList = document.querySelector('.films-list__container');
 for (let i = 0; i <= FILM_COUNT; i++){
-  render(filmsList, new CardFilms(arrayMove[i]).getTemplate());
+  render(filmsList, new CardFilms(arrayMove[i]).getElement());
 }
 
 //Создание DOM элемента кнопка загрузки дополнительных фильмов
-render(filmsSection, createShowMoreTemplate());
+render(filmsSection, new MoreTamplate().getElement());
 
 //Создание DOM элемента Top Film
-render(filmsSection, createSectionTopFilms());
+render(filmsSection, new TopFilms().getElement());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[1], new CardFilms(arrayMove[i]).getTemplate());
+  render(filmsContainerTopList[1], new CardFilms(arrayMove[i]).getElement());
 }
 
-render(filmsSection, createMostCommentTemplated());
+render(filmsSection, new CommentTemplated().getElement());
 filmsContainerTopList = searchElement();
 for (let i = 0; i <=  TOP_COUNT; i++){
-  render(filmsContainerTopList[2], new CardFilms(arrayMove[i]).getTemplate());
+  render(filmsContainerTopList[2], new CardFilms(arrayMove[i]).getElement());
 }
 
 //Создание DOM элемента статистики пользователя
-render(siteMain, createStatsTemplate());
+render(siteMain, new StatsTemplate().getElement());
 
 //render(siteMain, createPopupTemlate(arrayMove[0]));
 const showMore = document.querySelector('.films-list__show-more');
 
 showMore.addEventListener('click', function(){
   let i = FILM_COUNT;
-
   for (FILM_COUNT; FILM_COUNT <= i + 4; FILM_COUNT++){
     if(arrayMove.length <= FILM_COUNT){
       showMore.classList.add('visually-hidden');
       break;
     }
-    render(filmsList, new CardFilms(arrayMove[FILM_COUNT]).getTemplate());
+    render(filmsList, new CardFilms(arrayMove[FILM_COUNT]).getElement());
   }
-  filmCardLink = document.querySelectorAll('.film-card');
 });
 
 filmCardLink = document.querySelectorAll('.film-card');
 
 filmCardLink.forEach((value, index) => {
   value.childNodes[1].addEventListener('click', () => {
-    render(siteMain, new PopupFilm(arrayMove[index]).getPopup());
+    render(siteMain, new PopupFilm(arrayMove[index]).getElement());
   });
   filmCardLink = document.querySelectorAll('.film-card');
   siteMain = document.querySelector('.main');
 });
 
-siteMain.addEventListener('click', () => {
-  if(siteMain.querySelector('.film-details')){
-    document.querySelector('.film-details__close').querySelector('click', () => {
-      siteMain.querySelector('.film-details').remove();
-    });
-  }
+const popupFilm = new PopupFilm();
+
+
+popupFilm.getElement().querySelector('.film-card').addEventListener('click', () => {
+  console.log(1);
 });
 
-
-//render(siteMain, createPopupTemlate(arrayMove[getRandom(0, arrayMove.length-1)]));
 

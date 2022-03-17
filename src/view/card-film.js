@@ -1,5 +1,7 @@
+import { createElement } from "../utils";
+
 const creatCardFilm = (cardData) => {
-  
+
   const { title , description, poster } = cardData;
 
   return `<article class="film-card">
@@ -23,7 +25,7 @@ const creatCardFilm = (cardData) => {
 </article>`;
 };
 
-const creatSectionFilms = () => {
+export const creatSectionFilms = () => {
   return `<section class="films">
   <section class="films-list">
     <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
@@ -33,14 +35,47 @@ const creatSectionFilms = () => {
   </section>`;
 };
 
-class CardFilms {
-  constructor (cardList) {
-    this._cardList = cardList;
+export class CardFilms {
+  constructor (card) {
+    this._card = card;
+    this._element = null;
   }
 
   getTemplate() {
-    return creatCardFilm(this._cardList);
+    return creatCardFilm(this._card);
+  }
+
+  getElement() {
+    if(!this._element) {
+      return createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement(){
+    this._element = null;
   }
 }
 
-export { creatSectionFilms, CardFilms };
+export class SectionFilms {
+  constructor (){
+    this._element = null;
+  }
+
+  getTemplate(){
+    return creatSectionFilms();
+  }
+
+  getElement() {
+    if(!this._element) {
+      return createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement(){
+    this._element = null;
+  }
+}
