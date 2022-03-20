@@ -1,6 +1,6 @@
 import { getRandom } from '../utils.js';
 
-const COUNTER = 24;
+
 
 const title = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
 'Santa Claus Conquers the Martians', 'Popeye the Sailor Meets Sindbad the Sailor'];
@@ -36,11 +36,8 @@ const comment = {
   message : ['Great movie!', 'Cool', 'Top', 'Nice film']
 };
 
-const cardMove = () => {
-  let arrayMove = [];
-  for (let i = 0; i <= COUNTER; i ++){
-    arrayMove[i] = {
-      id : i,
+export const cardMove = () => {
+  return {
       title : title[getRandom(0, title.length - 1)],
       poster : poster[getRandom(0, poster.length - 1)],
       description : description[getRandom(0, description.length - 1)],
@@ -51,10 +48,4 @@ const cardMove = () => {
         message : comment.message[getRandom(0, comment.message.length - 1)]
       }
     };
-  }
-
-  return arrayMove;
 };
-
-const arrayMove = cardMove();
-export { arrayMove };

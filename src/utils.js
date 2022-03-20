@@ -1,8 +1,16 @@
+export const RenderPosition = {
+  AFTERBERGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
 
-const POSITION = 'beforeend';
+export const render = (container, template, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBERGIN:
+      container.prepend(template);
+    case RenderPosition.BEFOREEND:
+      container.append(template);
+  }
 
-export const render = (container, template) => {
-  container.append(template);
 };
 
 export const createElement = (template) => {
