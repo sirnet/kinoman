@@ -1,7 +1,5 @@
 import { getRandom } from '../utils.js';
 
-
-
 const title = ['The Dance of Life', 'Sagebrush Trail', 'The Man with the Golden Arm',
 'Santa Claus Conquers the Martians', 'Popeye the Sailor Meets Sindbad the Sailor'];
 
