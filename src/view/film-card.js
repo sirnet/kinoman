@@ -1,5 +1,4 @@
 export const createFilmCard = (array) => {
-  console.log(array);
   const {title, poster, description, } = array;
   return `<article class="film-card">
   <a class="film-card__link">
