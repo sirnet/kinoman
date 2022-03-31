@@ -16,6 +16,12 @@ const COUNT_CLASS = 2;
 const COUNT_FILMS = 21;
 let card = new Array(COUNT_FILMS).fill().map(cardMove);
 
+const renderCard = (cardListElement, card) => {
+  const cardComponent = new FilmCard(card);
+
+  render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
+}
+
 //Звание пользователя
 const haiderElement = document.querySelector('.header');
 render(haiderElement, new ProfileSite().getElement(), RenderPosition.BEFOREEND);
@@ -27,48 +33,47 @@ render(sectionMainElement, new SortElement().getElement(), RenderPosition.BEFORE
 
 // //Секция films
 const filmsComponent = new Films();
-render(sectionMainElement, new Films().getElement(), RenderPosition.BEFOREEND);
-const sectironFilms = document.querySelector('.films');
-console.log(filmsComponent.getElement());
-for (let i = 0; i <= COUNT_CLASS; i++){
-  render(filmsComponent.getElement(), new FilmList().getElement(), RenderPosition.BEFOREEND);
-}
-console.log(filmsComponent.getElement());
-const sectionFilm = document.querySelectorAll('.films-list');
-for (let i = 1; i<= COUNT_CLASS; i++) {
-  sectionFilm[i].classList.add('films-list--extra');
-}
-sectionFilm[0].querySelector('.films-list__title').innerHTML = 'All movies. Upcoming';
-sectionFilm[0].querySelector('.films-list__title').classList.add('visually-hidden');
-sectionFilm[1].querySelector('.films-list__title').innerHTML = 'Top rated';
-sectionFilm[2].querySelector('.films-list__title').innerHTML = 'Most commented';
+render(sectionMainElement, filmsComponent.getElement(), RenderPosition.BEFOREEND);
 
-const sectionFilmContainer = document.querySelectorAll('.films-list__container');
+
+const filmListComponent = new FilmList();
+for (let i = 0; i <= COUNT_CLASS; i++){
+  render(filmsComponent.getElement(), filmListComponent.getElement(), RenderPosition.BEFOREEND);
+  filmListComponent.removeElement();
+}
+
+const sectionFilmList = filmsComponent.getElement().querySelectorAll('.films-list');
+for (let i = 1; i<= COUNT_CLASS; i++) {
+  sectionFilmList[i].classList.add('films-list--extra');
+}
+sectionFilmList[0].querySelector('.films-list__title').innerHTML = 'All movies. Upcoming';
+sectionFilmList[0].querySelector('.films-list__title').classList.add('visually-hidden');
+sectionFilmList[1].querySelector('.films-list__title').innerHTML = 'Top rated';
+sectionFilmList[2].querySelector('.films-list__title').innerHTML = 'Most commented';
+
+const sectionFilmContainer = filmsComponent.getElement().querySelectorAll('.films-list__container');
 for(let i = 0; i <= COUNT; i++){
-   render(sectionFilmContainer[0], new FilmCard(card[i]).getElement(), RenderPosition.BEFOREEND);
+  renderCard(sectionFilmContainer[0], card[i]);
 }
 
 for(let i = 1; i <= COUNT_CLASS; i++){
   for(let j = 1; j <= COUNT_CLASS; j++) {
-     render(sectionFilmContainer[i], new FilmCard(card[i]).getElement(), RenderPosition.BEFOREEND);
+     renderCard(sectionFilmContainer[i], card[j]);
   }
 }
 
-render(sectionFilm[0], new ShowMore().getElement(), 'beforeend');
-const btnShowMore = sectironFilms.querySelector('.films-list__show-more');
-let FilmCardElement = [];
-for(let i = 0; i <= COUNT; i++){
-  FilmCardElement.push(new FilmCard(card[i]).getElement());
-}
-console.log(FilmCardElement);
-btnShowMore.addEventListener('click', () => {
-     for(let i = 0; i <= COUNT; i++){
-        if (COUNT_CHECK <= (card.length - 1)){
-         render(sectionFilmContainer[0], FilmCardElement[i], RenderPosition.BEFOREEND);
-         COUNT_CHECK++;
-       }
-       else {
-         btnShowMore.classList.add('visually-hidden');
+const showMoreComponent = new ShowMore();
+render(sectionFilmList[0], showMoreComponent.getElement(), 'beforeend');
+
+filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
+    for(let i = 0; i <= COUNT; i++){
+      if (COUNT_CHECK <= (card.length - 1)){
+        renderCard(sectionFilmContainer[0], card[i]);
+        COUNT_CHECK++;
+      }
+      else {
+        showMoreComponent.getElement().remove();
+        showMoreComponent.removeElement();
        }
      }
 });
