@@ -18,9 +18,21 @@ let card = new Array(COUNT_FILMS).fill().map(cardMove);
 
 const renderCard = (cardListElement, card) => {
   const cardComponent = new FilmCard(card);
+  const popupComponent = new PopupSection(card);
+
+  cardComponent.getElement().querySelector('.film-card__link').addEventListener('click', () => {
+      render(sectionMainElement, popupComponent.getElement(), RenderPosition.BEFOREEND);
+      document.querySelector('body').classList.add('hide-overflow');
+  });
+
+  popupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+    popupComponent.getElement().remove();
+    popupComponent.removeElement();
+    document.querySelector('body').classList.remove('hide-overflow');
+  });
 
   render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
-}
+};
 
 //Звание пользователя
 const haiderElement = document.querySelector('.header');

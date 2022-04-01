@@ -1,6 +1,7 @@
 import { createElement } from "../utils";
 
-const createPopupSection = () => {
+const createPopupSection = (array) => {
+  const {title, poster, description, } = array;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -9,7 +10,7 @@ const createPopupSection = () => {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+          <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
 
           <p class="film-details__age">18+</p>
         </div>
@@ -17,8 +18,8 @@ const createPopupSection = () => {
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">The Great Flamarion</h3>
-              <p class="film-details__title-original">Original: The Great Flamarion</p>
+              <h3 class="film-details__title">${title}</h3>
+              <p class="film-details__title-original">${description}</p>
             </div>
 
             <div class="film-details__rating">
@@ -168,12 +169,13 @@ const createPopupSection = () => {
 };
 
 export default class PopupSection {
-  constructor () {
+  constructor (card) {
+    this._card = card;
     this._element = null;
   }
 
   getTemplate () {
-    return createPopupSection();
+    return createPopupSection(this._card);
   }
 
   getElement () {
