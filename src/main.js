@@ -7,6 +7,7 @@ import FilmCard from "./view/film-card.js";
 import ShowMore from "./view/show-more.js";
 import StatsSection from "./view/stats.js";
 import PopupSection from "./view/popup.js";
+import ListEmpty from "./view/list-empty.js";
 import { cardMove } from "./mock/cadr.js";
 import { render, RenderPosition } from "./utils.js";
 
@@ -23,13 +24,25 @@ const renderCard = (cardListElement, card) => {
   cardComponent.getElement().querySelector('.film-card__link').addEventListener('click', () => {
       render(sectionMainElement, popupComponent.getElement(), RenderPosition.BEFOREEND);
       document.querySelector('body').classList.add('hide-overflow');
+      document.addEventListener('keydown', onEscKeyDown);
   });
 
   popupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
     popupComponent.getElement().remove();
     popupComponent.removeElement();
     document.querySelector('body').classList.remove('hide-overflow');
+    document.addEventListener('keydown', onEscKeyDown);
   });
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      popupComponent.getElement().remove();
+      popupComponent.removeElement();
+      document.removeEventListener('keydown', onEscKeyDown);
+      document.querySelector('body').classList.remove('hide-overflow');
+    }
+  };
 
   render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
 };
@@ -80,7 +93,7 @@ render(sectionFilmList[0], showMoreComponent.getElement(), 'beforeend');
 filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
     for(let i = 0; i <= COUNT; i++){
       if (COUNT_CHECK <= (card.length - 1)){
-        renderCard(sectionFilmContainer[0], card[i]);
+        renderCard(sectionFilmContainer[0], card[COUNT_CHECK]);
         COUNT_CHECK++;
       }
       else {
@@ -90,5 +103,9 @@ filmsComponent.getElement().querySelector('.films-list__show-more').addEventList
      }
 });
 
-render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
-//render(sectionMainElement, new PopupSection().getElement(), RenderPosition.BEFOREEND);
+render(sectionMainElement, new ListEmpty().getElement(), RenderPosition.BEFOREEND);
+//render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
+filmsComponent.getElement().remove();
+filmsComponent.removeElement();
+
+
