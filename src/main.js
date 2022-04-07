@@ -105,7 +105,7 @@ filmsComponent.getElement().querySelector('.films-list__show-more').addEventList
 
 render(sectionMainElement, new ListEmpty().getElement(), RenderPosition.BEFOREEND);
 //render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
-filmsComponent.getElement().remove();
-filmsComponent.removeElement();
+//filmsComponent.getElement().remove();
+//filmsComponent.removeElement();
 
 
