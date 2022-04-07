@@ -3,6 +3,8 @@ import NavigationElement from "./view/navigation.js";
 import SortElement from "./view/sort.js";
 import Films from "./view/films.js";
 import FilmList from "./view/film-list.js";
+import FilmTop from "./view/film-top.js";
+import filmComment from "./view/film-comment.js";
 import FilmCard from "./view/film-card.js";
 import ShowMore from "./view/show-more.js";
 import StatsSection from "./view/stats.js";
@@ -13,7 +15,7 @@ import { render, RenderPosition } from "./utils.js";
 
 const COUNT = 4;
 let COUNT_CHECK = 4;
-const COUNT_CLASS = 2;
+const COUNT_CLASS = 1;
 const COUNT_FILMS = 21;
 let card = new Array(COUNT_FILMS).fill().map(cardMove);
 
@@ -47,6 +49,12 @@ const renderCard = (cardListElement, card) => {
   render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
+const renderFilmList = (element, count) => {
+  for(let i = 0; i <= count; i++){
+    renderCard(sectionFilmContainer[element], card[i]);
+  }
+};
+
 //Звание пользователя
 const haiderElement = document.querySelector('.header');
 render(haiderElement, new ProfileSite().getElement(), RenderPosition.BEFOREEND);
@@ -62,34 +70,23 @@ render(sectionMainElement, filmsComponent.getElement(), RenderPosition.BEFOREEND
 
 
 const filmListComponent = new FilmList();
-for (let i = 0; i <= COUNT_CLASS; i++){
-  render(filmsComponent.getElement(), filmListComponent.getElement(), RenderPosition.BEFOREEND);
-  filmListComponent.removeElement();
-}
+render(filmsComponent.getElement(), filmListComponent.getElement(), RenderPosition.BEFOREEND);
+const filmTopComponent = new FilmTop();
+render(filmsComponent.getElement(), filmTopComponent.getElement(), RenderPosition.BEFOREEND);
+const filmCommentComponent = new filmComment();
+render(filmsComponent.getElement(), filmCommentComponent.getElement(), RenderPosition.BEFOREEND);
+
 
 const sectionFilmList = filmsComponent.getElement().querySelectorAll('.films-list');
-for (let i = 1; i<= COUNT_CLASS; i++) {
-  sectionFilmList[i].classList.add('films-list--extra');
-}
-sectionFilmList[0].querySelector('.films-list__title').innerHTML = 'All movies. Upcoming';
-sectionFilmList[0].querySelector('.films-list__title').classList.add('visually-hidden');
-sectionFilmList[1].querySelector('.films-list__title').innerHTML = 'Top rated';
-sectionFilmList[2].querySelector('.films-list__title').innerHTML = 'Most commented';
-
 const sectionFilmContainer = filmsComponent.getElement().querySelectorAll('.films-list__container');
-for(let i = 0; i <= COUNT; i++){
-  renderCard(sectionFilmContainer[0], card[i]);
-}
 
-for(let i = 1; i <= COUNT_CLASS; i++){
-  for(let j = 1; j <= COUNT_CLASS; j++) {
-     renderCard(sectionFilmContainer[i], card[j]);
-  }
-}
+renderFilmList(0, COUNT);
+renderFilmList(1, COUNT_CLASS);
+renderFilmList(2, COUNT_CLASS);
+
 
 const showMoreComponent = new ShowMore();
 render(sectionFilmList[0], showMoreComponent.getElement(), 'beforeend');
-
 filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
     for(let i = 0; i <= COUNT; i++){
       if (COUNT_CHECK <= (card.length - 1)){
@@ -104,7 +101,7 @@ filmsComponent.getElement().querySelector('.films-list__show-more').addEventList
 });
 
 render(sectionMainElement, new ListEmpty().getElement(), RenderPosition.BEFOREEND);
-//render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
+render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
 //filmsComponent.getElement().remove();
 //filmsComponent.removeElement();
 
