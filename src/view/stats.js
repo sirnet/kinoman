@@ -1,4 +1,4 @@
-import { createElement } from "../utils";
+import { createElement } from "../utils/utils";
 
 const createStatsSection = () => {
   return `<section class="statistic">

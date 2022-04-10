@@ -1,4 +1,4 @@
-import { createElement } from "../utils";
+import AbstarctView from "../utils/abstract";
 
 const createNavigationTemplate = () => {
   return `<nav class="main-navigation">
@@ -12,24 +12,8 @@ const createNavigationTemplate = () => {
 </nav>`;
 };
 
-export default class Navigation {
-  constructor () {
-    this._element = null;
-  }
-
+export default class Navigation extends AbstarctView{
   getTemplate () {
     return createNavigationTemplate();
-  }
-
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import { createElement } from "../utils";
+import AbstractView from "../utils/abstract";
 
 const createPopupSection = (array) => {
   const {title, poster, description, } = array;
@@ -168,25 +168,13 @@ const createPopupSection = (array) => {
 </section>`;
 };
 
-export default class PopupSection {
+export default class PopupSection extends AbstractView {
   constructor (card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate () {
     return createPopupSection(this._card);
-  }
-
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }

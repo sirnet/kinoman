@@ -10,8 +10,9 @@ import ShowMore from "./view/show-more.js";
 import StatsSection from "./view/stats.js";
 import PopupSection from "./view/popup.js";
 import ListEmpty from "./view/list-empty.js";
+
 import { cardMove } from "./mock/cadr.js";
-import { render, RenderPosition } from "./utils.js";
+import { render, RenderPosition } from "./utils/utils.js";
 
 const COUNT = 4;
 let COUNT_CHECK = 4;

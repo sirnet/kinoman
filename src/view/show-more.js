@@ -1,27 +1,12 @@
-import { createElement } from "../utils";
+import AbstarctView from "../utils/abstract.js";
 
 const createShowMore = () => {
   return `<button class="films-list__show-more">Show more</button>`;
 };
 
-export default class ShowMore {
-  constructor () {
-    this._element = null;
-  }
+export default class ShowMore extends AbstarctView {
 
   getTemplate () {
     return createShowMore();
-  }
-
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }

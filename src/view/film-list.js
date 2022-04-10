@@ -1,4 +1,4 @@
-import { createElement } from "../utils";
+import AbstarctView from "../utils/abstract.js";
 
 const createFilmList = () => {
   return `<section class="films-list">
@@ -8,24 +8,8 @@ const createFilmList = () => {
   </section>`;
 };
 
-export default class FilmList {
-  constructor () {
-    this._element = null;
-  }
-
+export default class FilmList extends AbstarctView {
   getTemplate () {
     return createFilmList();
-  }
-
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }
