@@ -88,7 +88,8 @@ renderFilmList(2, COUNT_CLASS);
 
 const showMoreComponent = new ShowMore();
 render(sectionFilmList[0], showMoreComponent.getElement(), 'beforeend');
-filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
+//filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
+showMoreComponent.setClickHandler(() => {
     for(let i = 0; i <= COUNT; i++){
       if (COUNT_CHECK <= (card.length - 1)){
         renderCard(sectionFilmContainer[0], card[COUNT_CHECK]);
