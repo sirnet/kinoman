@@ -24,13 +24,13 @@ const renderCard = (cardListElement, card) => {
   const cardComponent = new FilmCard(card);
   const popupComponent = new PopupSection(card);
 
-  cardComponent.getElement().querySelector('.film-card__link').addEventListener('click', () => {
+  cardComponent.setClickCard(() => {
       render(sectionMainElement, popupComponent.getElement(), RenderPosition.BEFOREEND);
       document.querySelector('body').classList.add('hide-overflow');
       document.addEventListener('keydown', onEscKeyDown);
   });
 
-  popupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+  popupComponent.setClickPopup(() => {
     popupComponent.getElement().remove();
     popupComponent.removeElement();
     document.querySelector('body').classList.remove('hide-overflow');
@@ -88,7 +88,6 @@ renderFilmList(2, COUNT_CLASS);
 
 const showMoreComponent = new ShowMore();
 render(sectionFilmList[0], showMoreComponent.getElement(), 'beforeend');
-//filmsComponent.getElement().querySelector('.films-list__show-more').addEventListener('click', () => {
 showMoreComponent.setClickHandler(() => {
     for(let i = 0; i <= COUNT; i++){
       if (COUNT_CHECK <= (card.length - 1)){

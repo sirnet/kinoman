@@ -172,9 +172,21 @@ export default class PopupSection extends AbstractView {
   constructor (card) {
     super();
     this._card = card;
+
+    this._clickPopup = this._clickPopup.bind(this);
   }
 
   getTemplate () {
     return createPopupSection(this._card);
+  }
+
+  _clickPopup (evt) {
+    evt.preventDefault();
+    this._callback.click();
+  }
+
+  setClickPopup (callback) {
+    this._callback.click = callback;
+    this.getElement().addEventListener('click', this._clickPopup);
   }
 }
