@@ -1,4 +1,4 @@
-import { createElement } from "../utils/utils";
+import Abstract from "../utils/abstract";
 
 const createStatsSection = () => {
   return `<section class="statistic">
@@ -52,24 +52,8 @@ const createStatsSection = () => {
 </section>`;
 };
 
-export default class StatsSection {
-  constructor () {
-    this._element = null;
-  }
-
-  getTemplate () {
+export default class StatsSection extends Abstract {
+    getTemplate () {
     return createStatsSection();
-  }
-
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }

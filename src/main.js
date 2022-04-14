@@ -12,7 +12,7 @@ import PopupSection from "./view/popup.js";
 import ListEmpty from "./view/list-empty.js";
 
 import { cardMove } from "./mock/cadr.js";
-import { render, RenderPosition } from "./utils/utils.js";
+import { render, remove, replace, RenderPosition } from "./utils/render";
 
 const COUNT = 4;
 let COUNT_CHECK = 4;
@@ -24,8 +24,16 @@ const renderCard = (cardListElement, card) => {
   const cardComponent = new FilmCard(card);
   const popupComponent = new PopupSection(card);
 
+  const replaceList = () => {
+    replace(popupComponent, cardComponent);
+  };
+
+  const replaceListCard = () => {
+    replace(cardComponent, popupComponent);
+  };
+
   cardComponent.setClickCard(() => {
-      render(sectionMainElement, popupComponent.getElement(), RenderPosition.BEFOREEND);
+      render(sectionMainElement, popupComponent, RenderPosition.BEFOREEND);
       document.querySelector('body').classList.add('hide-overflow');
       document.addEventListener('keydown', onEscKeyDown);
   });
@@ -47,7 +55,7 @@ const renderCard = (cardListElement, card) => {
     }
   };
 
-  render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
+  render(cardListElement, cardComponent, RenderPosition.BEFOREEND);
 };
 
 const renderFilmList = (element, count) => {
@@ -58,12 +66,12 @@ const renderFilmList = (element, count) => {
 
 //Звание пользователя
 const haiderElement = document.querySelector('.header');
-render(haiderElement, new ProfileSite().getElement(), RenderPosition.BEFOREEND);
+render(haiderElement, new ProfileSite, RenderPosition.BEFOREEND);
 
 //Навигация и сортировка
 const sectionMainElement = document.querySelector('.main');
-render(sectionMainElement, new NavigationElement().getElement(), RenderPosition.BEFOREEND);
-render(sectionMainElement, new SortElement().getElement(), RenderPosition.BEFOREEND);
+render(sectionMainElement, new NavigationElement, RenderPosition.BEFOREEND);
+render(sectionMainElement, new SortElement, RenderPosition.BEFOREEND);
 
 // //Секция films
 const filmsComponent = new Films();
@@ -71,11 +79,11 @@ render(sectionMainElement, filmsComponent.getElement(), RenderPosition.BEFOREEND
 
 
 const filmListComponent = new FilmList();
-render(filmsComponent.getElement(), filmListComponent.getElement(), RenderPosition.BEFOREEND);
+render(filmsComponent, filmListComponent, RenderPosition.BEFOREEND);
 const filmTopComponent = new FilmTop();
-render(filmsComponent.getElement(), filmTopComponent.getElement(), RenderPosition.BEFOREEND);
+render(filmsComponent, filmTopComponent, RenderPosition.BEFOREEND);
 const filmCommentComponent = new filmComment();
-render(filmsComponent.getElement(), filmCommentComponent.getElement(), RenderPosition.BEFOREEND);
+render(filmsComponent, filmCommentComponent, RenderPosition.BEFOREEND);
 
 
 const sectionFilmList = filmsComponent.getElement().querySelectorAll('.films-list');
@@ -101,8 +109,8 @@ showMoreComponent.setClickHandler(() => {
      }
 });
 
-render(sectionMainElement, new ListEmpty().getElement(), RenderPosition.BEFOREEND);
-render(sectionMainElement, new StatsSection().getElement(), RenderPosition.BEFOREEND);
+render(sectionMainElement, new ListEmpty, RenderPosition.BEFOREEND);
+render(sectionMainElement, new StatsSection, RenderPosition.BEFOREEND);
 //filmsComponent.getElement().remove();
 //filmsComponent.removeElement();
 
