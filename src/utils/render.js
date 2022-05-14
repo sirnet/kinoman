@@ -32,11 +32,11 @@ export const createElement = (template) => {
 };
 
 export const replace = (newChild, oldChild) => {
-  if (oldChild instanceof Astract){
+  if (oldChild instanceof Abstract){
     oldChild = oldChild.getElement();
   }
 
-  if (newChild instanceof Astract) {
+  if (newChild instanceof Abstract) {
     newChild = newChild.getElement();
   }
 
