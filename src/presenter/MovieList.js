@@ -7,18 +7,23 @@ import FilmCard from "../view/film-card.js";
 import PopupSection from "../view/popup.js";
 import ShowMore from "../view/show-more.js";
 import ListEmpty from "../view/list-empty.js";
+import Movie from "./Movie.js";
 import { render, remove, replace, RenderPosition } from "../utils/render";
 
 const COUNT = 4;
+const COUNT_CLASS = 1;
 
 export default class MovieList {
   constructor (movieContainer) {
       this._movieContainer = movieContainer;
 
       this._filmComponent = new Films();
+      this._filmTopComponent = new FilmTop();
+      this._filmCommentComponent = new filmComment();
       this._sortComponent = new SortElement();
       this._filmListComponent = new FilmList();
       this._noFilmComponent = new ListEmpty();
+
   }
 
   init(movieList) {
@@ -32,42 +37,36 @@ export default class MovieList {
     render(this._filmComponent, this._sortComponent.RenderPosition.AFTERBEGIN);
   }
 
-  _renderMovie(card) {
-    const cardComponent = new FilmCard(card);
-    const popupComponent = new PopupSection(card);
+  _renderTopFilm() {
+    render(this._filmComponent, this._filmTopComponent, RenderPosition.BEFOREEND);
 
-    const replaceList = () => {
-      replace(popupComponent, cardComponent);
-    };
+    const sectionFilmContainer = this._filmTopComponent.getElement().querySelector('.films-list__container');
+    const moviePresenter = new Movie(sectionFilmContainer);
 
-    const replaceListCard = () => {
-      replace(cardComponent, popupComponent);
-    };
+    for(let i =0; i<= COUNT_CLASS; i++) {
+      moviePresenter._renderMovie(this._movieList[i]);
+    }
 
-    cardComponent.setClickCard(() => {
-        render(this._movieContainer, popupComponent, RenderPosition.BEFOREEND);
-        document.querySelector('body').classList.add('hide-overflow');
-        document.addEventListener('keydown', onEscKeyDown);
-    });
+  }
 
-    popupComponent.setClickPopup(() => {
-      popupComponent.getElement().remove();
-      popupComponent.removeElement();
-      document.querySelector('body').classList.remove('hide-overflow');
-      document.addEventListener('keydown', onEscKeyDown);
-    });
+  _renderComment() {
+    render(this._filmComponent, this._filmCommentComponent, RenderPosition.BEFOREEND);
 
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        popupComponent.getElement().remove();
-        popupComponent.removeElement();
-        document.removeEventListener('keydown', onEscKeyDown);
-        document.querySelector('body').classList.remove('hide-overflow');
-      }
-    };
+    const sectionFilmContainer = this._filmCommentComponent.getElement().querySelector('.films-list__container');
+    const moviePresenter = new Movie(sectionFilmContainer);
 
-    render(this._filmListComponent, cardComponent, RenderPosition.BEFOREEND);
+    for(let i =0; i<= COUNT_CLASS; i++) {
+      moviePresenter._renderMovie(this._movieList[i]);
+    }
+  }
+
+  _renderMovie() {
+    const sectionFilmContainer = this._filmComponent.getElement().querySelector('.films-list__container');
+    const moviePresenter = new Movie(sectionFilmContainer);
+
+    for(let i =0; i<= COUNT; i++) {
+      moviePresenter._renderMovie(this._movieList[i]);
+    }
   }
 
   _renderMovies(from, to) {
@@ -80,7 +79,6 @@ export default class MovieList {
     let COUNT_CHECK = 4;
 
     const showMoreComponent = new ShowMore();
-
 
   }
 

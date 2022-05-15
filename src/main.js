@@ -1,6 +1,7 @@
 import ProfileSite from "./view/profile.js";
 import NavigationElement from "./view/navigation.js";
 import MovieList from "./presenter/MovieList.js";
+import Movie from "./presenter/Movie.js";
 //import SortElement from "./view/sort.js";
 //import Films from "./view/films.js";
 //import FilmList from "./view/film-list.js";
@@ -59,7 +60,7 @@ let card = new Array(COUNT_FILMS).fill().map(cardMove);
 //   render(cardListElement, cardComponent, RenderPosition.BEFOREEND);
 // };
 
- //const renderFilmList = (element, count) => {
+//const renderFilmList = (element, count) => {
    //for(let i = 0; i <= count; i++){
      //renderCard(sectionFilmContainer[element], card[i]);
    //
@@ -75,6 +76,10 @@ render(sectionMainElement, new NavigationElement(), RenderPosition.BEFOREEND);
 //render(sectionMainElement, new SortElement(), RenderPosition.BEFOREEND);
 
 const moviePresenter = new MovieList(sectionMainElement);
+
+//const sectionFilmList = filmsComponent.getElement().querySelectorAll('.films-list');
+//const sectionFilmContainer = filmsComponent.getElement().querySelectorAll('.films-list__container');
+
 
 // //Секция films
 //const filmsComponent = new Films();
@@ -118,10 +123,14 @@ const moviePresenter = new MovieList(sectionMainElement);
 //filmsComponent.removeElement();
 
 moviePresenter.init(card);
-moviePresenter._renderMovie(card);
+moviePresenter._renderMovie();
+moviePresenter._renderTopFilm();
+moviePresenter._renderComment();
+//moviePresenter._renderMovie(card);
+
 //const sectionFilmList = filmsComponent.getElement().querySelectorAll('.films-list');
 //const sectionFilmContainer = filmsComponent.getElement().querySelectorAll('.films-list__container');
 
-renderFilmList(0, COUNT);
+//renderFilmList(0, COUNT);
 //renderFilmList(1, COUNT_CLASS);
 //renderFilmList(2, COUNT_CLASS);
