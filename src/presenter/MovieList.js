@@ -3,19 +3,16 @@ import Films from "../view/films.js";
 import FilmList from "../view/film-list.js";
 import FilmTop from "../view/film-top.js";
 import filmComment from "../view/film-comment.js";
-import FilmCard from "../view/film-card.js";
-import PopupSection from "../view/popup.js";
 import ShowMore from "../view/show-more.js";
 import ListEmpty from "../view/list-empty.js";
 import Movie from "./Movie.js";
 import { render, remove, replace, RenderPosition } from "../utils/render";
 
-const COUNT = 4;
-const COUNT_CLASS = 1;
-
+const COUNT_PER_STEP = 5;
 export default class MovieList {
   constructor (movieContainer) {
       this._movieContainer = movieContainer;
+      this.renderCardCount = COUNT_PER_STEP;
 
       this._filmComponent = new Films();
       this._filmTopComponent = new FilmTop();
@@ -23,6 +20,9 @@ export default class MovieList {
       this._sortComponent = new SortElement();
       this._filmListComponent = new FilmList();
       this._noFilmComponent = new ListEmpty();
+      this._showMoreComponent = new ShowMore();
+
+      this._handleLoadMoreButtonClick = this.__handleLoadMoreButtonClick.bind(this);
 
   }
 
@@ -31,6 +31,7 @@ export default class MovieList {
 
     render(this._movieContainer, this._filmComponent, RenderPosition.BEFOREEND);
     render(this._filmComponent, this._filmListComponent, RenderPosition.BEFOREEND);
+    this._listMovieComponent = this._filmComponent.getElement().querySelector('.films-list__container');
   }
 
   _renderSort() {
@@ -39,51 +40,59 @@ export default class MovieList {
 
   _renderTopFilm() {
     render(this._filmComponent, this._filmTopComponent, RenderPosition.BEFOREEND);
+    this._topFilmsComponent = this._filmTopComponent.getElement().querySelector('.films-list__container');
 
-    const sectionFilmContainer = this._filmTopComponent.getElement().querySelector('.films-list__container');
-    const moviePresenter = new Movie(sectionFilmContainer);
-
-    for(let i =0; i<= COUNT_CLASS; i++) {
-      moviePresenter._renderMovie(this._movieList[i]);
-    }
+    this._movieList
+    .slice(0, 2)
+    .forEach((movieList) => this._renderMovie(movieList, this._topFilmsComponent));
 
   }
 
   _renderComment() {
     render(this._filmComponent, this._filmCommentComponent, RenderPosition.BEFOREEND);
+    this._commentComponent = this._filmCommentComponent.getElement().querySelector('.films-list__container');
 
-    const sectionFilmContainer = this._filmCommentComponent.getElement().querySelector('.films-list__container');
-    const moviePresenter = new Movie(sectionFilmContainer);
-
-    for(let i =0; i<= COUNT_CLASS; i++) {
-      moviePresenter._renderMovie(this._movieList[i]);
-    }
+    this._movieList
+    .slice(0, 2)
+    .forEach((movieList) => this._renderMovie(movieList, this._commentComponent));
   }
 
-  _renderMovie() {
-    const sectionFilmContainer = this._filmComponent.getElement().querySelector('.films-list__container');
-    const moviePresenter = new Movie(sectionFilmContainer);
+  _renderListMovie(from, to) {
 
-    for(let i =0; i<= COUNT; i++) {
-      moviePresenter._renderMovie(this._movieList[i]);
-    }
-  }
-
-  _renderMovies(from, to) {
     this._movieList
     .slice(from, to)
-    .forEach((movieList) => this._renderMovie(movieList));
+    .forEach((movieList) => this._renderMovie(movieList, this._listMovieComponent));
+  }
+
+  _renderMovie(card, section) {
+    this.movieComponent = new Movie(section);
+    this.movieComponent.init(card);
+  }
+
+  _handleLoadMoreButtonClick() {
+
+
   }
 
   _renderShowMore() {
-    let COUNT_CHECK = 4;
 
-    const showMoreComponent = new ShowMore();
+    render(this._filmListComponent, this._showMoreComponent, RenderPosition.BEFOREEND);
 
+    this._showMoreComponent.setClickHandler(() => {
+      this._movieList
+        .slice(countCheck, countCheck + COUNT)
+        .forEach((movieList) => this._renderMovie(movieList, this._listMovieComponent));
+
+      countCheck += COUNT;
+
+      if (countCheck >= this._movieList.length) {
+        remove(this._showMoreComponent);
+      }
+    });
   }
 
   _renderNoFilm() {
-    render(this._filmComponent, this._noFilmComponent, RenderPosition.AFTERBEGIN);
+    render(this._filmComponent, this._noFilmComponent, RenderPosition.AFTEREND);
   }
 
   _renderCard() {
@@ -94,10 +103,6 @@ export default class MovieList {
 
     this._renderSort();
 
-    this._renderMovies(0, Math.min(this._movieList.length, COUNT));
 
-    if(this._movieList.length > COUNT) {
-      this._renderShowMore();
-    }
   }
 }
