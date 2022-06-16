@@ -12,7 +12,7 @@ const COUNT_PER_STEP = 5;
 export default class MovieList {
   constructor (movieContainer) {
       this._movieContainer = movieContainer;
-      this.renderCardCount = COUNT_PER_STEP;
+      this._renderCardCount = COUNT_PER_STEP;
 
       this._filmComponent = new Films();
       this._filmTopComponent = new FilmTop();
@@ -22,8 +22,7 @@ export default class MovieList {
       this._noFilmComponent = new ListEmpty();
       this._showMoreComponent = new ShowMore();
 
-      this._handleLoadMoreButtonClick = this.__handleLoadMoreButtonClick.bind(this);
-
+      this._handleLoadMoreButtonClick = this._handleLoadMoreButtonClick.bind(this);
   }
 
   init(movieList) {
@@ -32,10 +31,12 @@ export default class MovieList {
     render(this._movieContainer, this._filmComponent, RenderPosition.BEFOREEND);
     render(this._filmComponent, this._filmListComponent, RenderPosition.BEFOREEND);
     this._listMovieComponent = this._filmComponent.getElement().querySelector('.films-list__container');
+
+    this._renderCard();
   }
 
   _renderSort() {
-    render(this._filmComponent, this._sortComponent.RenderPosition.AFTERBEGIN);
+    render(this._filmComponent, this._sortComponent, RenderPosition.AFTEREND);
   }
 
   _renderTopFilm() {
@@ -58,7 +59,6 @@ export default class MovieList {
   }
 
   _renderListMovie(from, to) {
-
     this._movieList
     .slice(from, to)
     .forEach((movieList) => this._renderMovie(movieList, this._listMovieComponent));
@@ -70,25 +70,18 @@ export default class MovieList {
   }
 
   _handleLoadMoreButtonClick() {
+    this._renderListMovie(this._renderCardCount, this._renderCardCount + COUNT_PER_STEP);
+    this._renderCardCount += COUNT_PER_STEP;
 
-
+    if (this._renderCardCount >= this._movieList.length) {
+      remove(this._showMoreComponent);
+    }
   }
 
   _renderShowMore() {
 
     render(this._filmListComponent, this._showMoreComponent, RenderPosition.BEFOREEND);
-
-    this._showMoreComponent.setClickHandler(() => {
-      this._movieList
-        .slice(countCheck, countCheck + COUNT)
-        .forEach((movieList) => this._renderMovie(movieList, this._listMovieComponent));
-
-      countCheck += COUNT;
-
-      if (countCheck >= this._movieList.length) {
-        remove(this._showMoreComponent);
-      }
-    });
+    this._showMoreComponent.setClickHandler(this._handleLoadMoreButtonClick);
   }
 
   _renderNoFilm() {
@@ -96,12 +89,14 @@ export default class MovieList {
   }
 
   _renderCard() {
-    if(this._movieList.every(card)){
-      this._renderNoFilm();
-      return;
-    }
+    // if(this._movieList.every(card)){
+    //   this._renderNoFilm();
+    //   return;
+    // }
 
+    this._renderListMovie(0,5);
     this._renderSort();
+    this._renderShowMore();
 
 
   }

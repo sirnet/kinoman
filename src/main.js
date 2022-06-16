@@ -21,8 +21,8 @@ render(sectionMainElement, new NavigationElement(), RenderPosition.BEFOREEND);
 const moviePresenter = new MovieList(sectionMainElement);
 
 moviePresenter.init(card);
-moviePresenter._renderListMovie(0,5);
-moviePresenter._renderShowMore();
-moviePresenter._renderTopFilm();
-moviePresenter._renderComment();
+//moviePresenter._renderListMovie(0,5);
+//moviePresenter._renderShowMore();
+//moviePresenter._renderTopFilm();
+//moviePresenter._renderComment();
 //moviePresenter._renderCard();
